@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Academia Pro · Sistema Académico</title>
+  <link rel="stylesheet" href="css/styles.css">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🎓</text></svg>">
+</head>
+<body>
+
+<!-- ===== LOGIN ===== -->
+<div id="loginScreen">
+  <div class="login-box">
+    <div class="login-logo">
+      <div class="icon">🎓</div>
+      <h1>Academia Pro</h1>
+      <p>Sistema de Gestión Académica</p>
+    </div>
+
+    <div class="quick-logins">
+      <p>Acceso rápido por rol</p>
+      <div class="quick-btns">
+        <button class="quick-btn" onclick="quickLogin('admin')">🔑 Admin</button>
+        <button class="quick-btn" onclick="quickLogin('profesor')">👨‍🏫 Profesor</button>
+        <button class="quick-btn" onclick="quickLogin('estudiante')">🎓 Estudiante</button>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label>Correo Electrónico</label>
+      <input type="email" id="loginEmail" placeholder="usuario@academia.edu" onkeydown="if(event.key==='Enter')login()">
+    </div>
+    <div class="form-group">
+      <label>Contraseña</label>
+      <input type="password" id="loginPassword" placeholder="••••••••" onkeydown="if(event.key==='Enter')login()">
+    </div>
+    <div class="error-msg" id="loginError"></div>
+    <button class="btn btn-primary" onclick="login()">Iniciar Sesión →</button>
+
+    <div style="margin-top:20px;padding:16px;background:var(--bg3);border-radius:10px;border:1px solid var(--border)">
+      <div style="font-size:11px;color:var(--text3);text-transform:uppercase;letter-spacing:0.5px;margin-bottom:8px">Credenciales de prueba</div>
+      <div style="font-size:12px;color:var(--text2);line-height:1.8">
+        <strong style="color:var(--text)">Admin:</strong> admin@academia.edu / admin123<br>
+        <strong style="color:var(--text)">Profesor:</strong> carlos@academia.edu / prof123<br>
+        <strong style="color:var(--text)">Estudiante:</strong> maria@academia.edu / est123
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ===== APP ===== -->
+<div id="appScreen" class="hidden">
+
+  <!-- SIDEBAR -->
+  <aside class="sidebar">
+    <div class="sidebar-logo">
+      <div class="icon">🎓</div>
+      <div>
+        <h2>Academia Pro</h2>
+        <p>Sistema Académico</p>
+      </div>
+    </div>
+
+    <div class="sidebar-user">
+      <div id="sidebarUserAvatar" class="user-avatar av-blue">AP</div>
+      <div>
+        <div id="sidebarUserName" class="user-name">Admin</div>
+        <div id="sidebarUserRole" class="user-role">Administrador</div>
+      </div>
+    </div>
+
+    <nav class="sidebar-nav" id="sidebarNav"></nav>
+
+    <div class="sidebar-footer">
+      <button class="btn btn-secondary w-full" onclick="logout()">🚪 Cerrar Sesión</button>
+    </div>
+  </aside>
+
+  <!-- MAIN -->
+  <main class="main-content">
+    <div class="top-bar">
+      <div>
+        <h1 id="pageTitle">Dashboard</h1>
+        <div class="breadcrumb">Academia Pro · <span id="pageTitle2">Inicio</span></div>
+      </div>
+      <div class="flex align-center gap-8">
+        <div id="topUserInfo" style="text-align:right">
+          <div style="font-size:13px;font-weight:600" id="topUserName">-</div>
+          <div style="font-size:11px;color:var(--text2)" id="topUserEmail">-</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="page-content" id="pageContent">
+      <!-- Contenido dinámico -->
+    </div>
+  </main>
+
+</div>
+
+<!-- MODAL -->
+<div id="modalOverlay" class="hidden"></div>
+
+<!-- TOAST -->
+<div id="toastContainer" class="toast-container"></div>
+
+<script src="js/data.js"></script>
+<script src="js/app.js"></script>
+<script>
+  // Update top bar on init
+  const _origInit = initApp;
+  window.initApp = function() {
+    _origInit();
+    const u = AppState.currentUser;
+    document.getElementById('topUserName').textContent = u.nombre;
+    document.getElementById('topUserEmail').textContent = u.email;
+  };
+</script>
+</body>
+</html>
